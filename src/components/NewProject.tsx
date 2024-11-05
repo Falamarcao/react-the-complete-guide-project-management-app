@@ -8,6 +8,7 @@ import Modal, { ModalRef } from './Modal';
 
 interface NewProjectProps {
   onAdd: (data: Project) => void;
+  onCancel: () => void;
 }
 
 const validateDate = (date: Date) => {
@@ -19,7 +20,7 @@ const validateDate = (date: Date) => {
   return !isNaN(date.getTime()) && date >= today;
 };
 
-const NewProject = ({ onAdd }: NewProjectProps) => {
+const NewProject = ({ onAdd, onCancel }: NewProjectProps) => {
   const modalRef = useRef<ModalRef>(null);
 
   const titleRef = useRef<HTMLInputElement>(null);
@@ -31,8 +32,6 @@ const NewProject = ({ onAdd }: NewProjectProps) => {
     const title = titleRef.current?.value.trim();
     const description = descriptionRef.current?.value.trim();
     const dueDate = dueDateRef.current?.value;
-
-    console.log(dueDate);
 
     const dueDateAsDate = new Date(dueDate ? dueDate + 'T00:00:00Z' : '');
 
@@ -62,7 +61,10 @@ const NewProject = ({ onAdd }: NewProjectProps) => {
       <div className="w-[35rem] mt-16">
         <menu className="flex items-center justify-end gap-4 my-4">
           <li>
-            <button className="text-stone-800 hover:text-stone-950">
+            <button
+              className="text-stone-800 hover:text-stone-950"
+              onClick={onCancel}
+            >
               Cancel
             </button>
           </li>
