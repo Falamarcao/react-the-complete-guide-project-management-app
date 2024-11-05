@@ -10,8 +10,14 @@ interface NewProjectProps {
   onAdd: (data: Project) => void;
 }
 
-const validateDate = (date: Date) =>
-  !isNaN(date.getTime()) && date >= new Date();
+const validateDate = (date: Date) => {
+  let today = new Date();
+  today = new Date(
+    Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate())
+  );
+
+  return !isNaN(date.getTime()) && date >= today;
+};
 
 const NewProject = ({ onAdd }: NewProjectProps) => {
   const modalRef = useRef<ModalRef>(null);
@@ -26,7 +32,9 @@ const NewProject = ({ onAdd }: NewProjectProps) => {
     const description = descriptionRef.current?.value.trim();
     const dueDate = dueDateRef.current?.value;
 
-    const dueDateAsDate = new Date(dueDate ?? '');
+    console.log(dueDate);
+
+    const dueDateAsDate = new Date(dueDate ? dueDate + 'T00:00:00Z' : '');
 
     // Validation
     if (!(title && description && validateDate(dueDateAsDate))) {
@@ -39,15 +47,17 @@ const NewProject = ({ onAdd }: NewProjectProps) => {
       id: Math.random().toString(), // OK for a demo
       title: title,
       description: description,
-      dueDate: dueDateAsDate,
+      dueDate: dueDateAsDate.toISOString(),
     });
   };
 
   return (
     <>
       <Modal ref={modalRef}>
-        <h2>Invalid Input</h2>
-        <p>Please, fill all the fields</p>
+        <h2 className="text-xl font-bold text-stone-700 my-4">Invalid Input</h2>
+        <p className="text-stone-600 mb-4">
+          Please, fill all the fields and check if the Due Date is valid.
+        </p>
       </Modal>
       <div className="w-[35rem] mt-16">
         <menu className="flex items-center justify-end gap-4 my-4">

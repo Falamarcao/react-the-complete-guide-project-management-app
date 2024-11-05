@@ -1,6 +1,8 @@
 import { forwardRef, ReactNode, useImperativeHandle, useRef } from 'react';
 import { createPortal } from 'react-dom';
 
+import Button from './Button';
+
 interface ModalProps {
   children: ReactNode;
 }
@@ -19,10 +21,13 @@ const Modal = forwardRef<ModalRef, ModalProps>(({ children }, ref) => {
   }));
 
   return createPortal(
-    <dialog ref={dialogRef}>
+    <dialog
+      ref={dialogRef}
+      className="backdrop:bg-stone-900/90 p-4 rounded-md shadow-md"
+    >
       {children}
-      <form method="dialog">
-        <button>Close</button>
+      <form method="dialog" className="mt-4 text-right">
+        <Button>Close</Button>
       </form>
     </dialog>,
     document.getElementById('modal-root')! as HTMLDivElement
