@@ -35,6 +35,16 @@ function App() {
     }));
   };
 
+  const handleDeleteProject = () => {
+    setProjects((prevState: ProjectManagement) => ({
+      ...prevState,
+      selectedProjectId: undefined,
+      projects: prevState.projects.filter(
+        (project: Project) => project.id !== prevState.selectedProjectId
+      ),
+    }));
+  };
+
   return (
     <main className="h-screen my-8 flex gap-8">
       <SideBar
@@ -57,6 +67,7 @@ function App() {
               (project) => project.id === projectManagement.selectedProjectId
             )!
           }
+          onDelete={handleDeleteProject}
         />
       )}
     </main>
