@@ -4,12 +4,17 @@ import Home from './components/Home';
 import NewProject from './components/NewProject';
 import SideBar from './components/SideBar';
 import { ProjectManagement, Project } from './models/ProjectManagement';
+import SelectedProject from './components/SelectedProject';
 
 function App() {
-  const [projects, setProjects] = useState<ProjectManagement>({
+  const [projectManagement, setProjects] = useState<ProjectManagement>({
     selectedProjectId: undefined,
     projects: [],
   });
+
+  const handleSelectProject = (id: string) => {
+    setProjects((prevState) => ({ ...prevState, selectedProjectId: id }));
+  };
 
   const handleStartAddProject = () => {
     setProjects((prevState) => ({ ...prevState, selectedProjectId: null }));
@@ -32,15 +37,28 @@ function App() {
 
   return (
     <main className="h-screen my-8 flex gap-8">
-      <SideBar onStartAddProject={handleStartAddProject} pm={projects} />
-      {projects.selectedProjectId === null ? (
+      <SideBar
+        onStartAddProject={handleStartAddProject}
+        onSelectProject={handleSelectProject}
+        selectedProjectId={projectManagement.selectedProjectId}
+        pm={projectManagement}
+      />
+      {projectManagement.selectedProjectId === null ? (
         <NewProject
           onAdd={handleAddProject}
           onCancel={handleCancelAddProject}
         />
-      ) : projects.selectedProjectId === undefined ? (
+      ) : projectManagement.selectedProjectId === undefined ? (
         <Home onStartAddProject={handleStartAddProject} />
-      ) : null}
+      ) : (
+        <SelectedProject
+          project={
+            projectManagement.projects.find(
+              (project) => project.id === projectManagement.selectedProjectId
+            )!
+          }
+        />
+      )}
     </main>
   );
 }
