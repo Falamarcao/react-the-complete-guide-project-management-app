@@ -18,15 +18,14 @@ function App() {
   const handleAddProject = (newProject: Project) => {
     setProjects((prevState: ProjectManagement) => ({
       ...prevState,
+      selectedProjectId: undefined,
       projects: [...prevState.projects, newProject],
     }));
   };
 
-  console.log(projects);
-
   return (
     <main className="h-screen my-8 flex gap-8">
-      <SideBar onStartAddProject={handleStartAddProject} />
+      <SideBar onStartAddProject={handleStartAddProject} pm={projects} />
       {projects.selectedProjectId === null ? (
         <NewProject onAdd={handleAddProject} />
       ) : projects.selectedProjectId === undefined ? (
