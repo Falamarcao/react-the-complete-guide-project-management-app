@@ -3,14 +3,36 @@ import { useState } from 'react';
 import Home from './components/Home';
 import NewProject from './components/Project/NewProject';
 import SideBar from './components/SideBar';
-import { ProjectManagement, Project } from './models/ProjectManagement';
+import { ProjectManagement, Project, Task } from './models/ProjectManagement';
 import SelectedProject from './components/Project/SelectedProject';
 
 function App() {
   const [projectManagement, setProjects] = useState<ProjectManagement>({
     selectedProjectId: undefined,
     projects: [],
+    tasks: [],
   });
+
+  const handleAddTask = (taskName: string) => {
+    setProjects((prevState: ProjectManagement) => ({
+      ...prevState,
+      tasks: [
+        {
+          id: Math.random().toString(),
+          projectId: prevState.selectedProjectId!,
+          text: taskName,
+        },
+        ...prevState.tasks,
+      ],
+    }));
+  };
+
+  const handleDeleteTask = (id: string) => {
+    setProjects((prevState: ProjectManagement) => ({
+      ...prevState,
+      tasks: prevState.tasks.filter((task: Task) => task.id !== id),
+    }));
+  };
 
   const handleSelectProject = (id: string) => {
     setProjects((prevState) => ({ ...prevState, selectedProjectId: id }));
@@ -68,6 +90,9 @@ function App() {
             )!
           }
           onDelete={handleDeleteProject}
+          tasks={projectManagement.tasks}
+          onAddTask={handleAddTask}
+          onDeleteTask={handleDeleteTask}
         />
       )}
     </main>

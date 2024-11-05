@@ -2,12 +2,23 @@ import { Project } from '../../models/ProjectManagement';
 
 import Tasks from '../Tasks/Tasks';
 
+import { Task } from '../../models/ProjectManagement';
+
 interface SelectedProjectProps {
   project: Project;
   onDelete: () => void;
+  tasks: Task[];
+  onAddTask: (task: string) => void;
+  onDeleteTask: (taskId: string) => void;
 }
 
-const SelectedProject = ({ project, onDelete }: SelectedProjectProps) => {
+const SelectedProject = ({
+  project,
+  onDelete,
+  tasks,
+  onAddTask,
+  onDeleteTask,
+}: SelectedProjectProps) => {
   const formattedDate = new Date(project.dueDate).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'short',
@@ -33,7 +44,7 @@ const SelectedProject = ({ project, onDelete }: SelectedProjectProps) => {
           {project.description}
         </p>
       </header>
-      <Tasks />
+      <Tasks tasks={tasks} onAdd={onAddTask} onDelete={onDeleteTask} />
     </div>
   );
 };
