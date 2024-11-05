@@ -1,4 +1,6 @@
-import { Project } from '../models/ProjectManagement';
+import { Project } from '../../models/ProjectManagement';
+
+import Tasks from '../Tasks/Tasks';
 
 interface SelectedProjectProps {
   project: Project;
@@ -31,6 +33,7 @@ const SelectedProject = ({ project, onDelete }: SelectedProjectProps) => {
           {project.description}
         </p>
       </header>
+      <Tasks />
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import { MouseEvent } from 'react';
 
-import Button from './Button';
+import Button from './Common/Button';
 
 import { Project, ProjectManagement } from '../models/ProjectManagement';
 

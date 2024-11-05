@@ -1,10 +1,10 @@
 import { useRef } from 'react';
 
-import Button from './Button';
-import Input from './Input';
+import Button from '../Common/Button';
+import Input from '../Common/Input';
 
-import { Project } from '../models/ProjectManagement';
-import Modal, { ModalRef } from './Modal';
+import { Project } from '../../models/ProjectManagement';
+import Modal, { ModalRef } from '../Common/Modal';
 
 interface NewProjectProps {
   onAdd: (data: Project) => void;

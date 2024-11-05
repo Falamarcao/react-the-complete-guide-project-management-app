@@ -2,7 +2,7 @@ import { MouseEvent } from 'react';
 
 import icon from '../assets/no-projects.png';
 
-import Button from './Button';
+import Button from './Common/Button';
 
 interface HomeProps {
   onStartAddProject: (event: MouseEvent<HTMLButtonElement>) => void;

@@ -1,10 +1,10 @@
 import { useState } from 'react';
 
 import Home from './components/Home';
-import NewProject from './components/NewProject';
+import NewProject from './components/Project/NewProject';
 import SideBar from './components/SideBar';
 import { ProjectManagement, Project } from './models/ProjectManagement';
-import SelectedProject from './components/SelectedProject';
+import SelectedProject from './components/Project/SelectedProject';
 
 function App() {
   const [projectManagement, setProjects] = useState<ProjectManagement>({
